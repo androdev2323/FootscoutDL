@@ -37,13 +37,13 @@ def get_embeddings(model, data):
 
 embeddings = get_embeddings(model, X_pca)
 
-def find_similar_players(player_name, embeddings, player_data, top_n=5):
+def find_similar_players(player_name, embeddings, player_data):
     player_index = player_data[player_data['Player'] == player_name].index
     if player_index.empty:
         return []
     player_index = player_index[0]
     similarities = cosine_similarity([embeddings[player_index]], embeddings)[0]
-    similar_players_indices = similarities.argsort()[::-1][1:top_n+1]
+    similar_players_indices = similarities.argsort()[::-1][1:]
     similar_players = player_data.iloc[similar_players_indices][['Player', 'Nation', 'League', 'Squad', 'Age', 'Position']]
     similar_players['similarity_score'] = similarities[similar_players_indices]
     return similar_players.to_dict('records')
