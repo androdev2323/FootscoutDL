@@ -44,7 +44,7 @@ def find_similar_players(player_name, embeddings, player_data):
     player_index = player_index[0]
     similarities = cosine_similarity([embeddings[player_index]], embeddings)[0]
     similar_players_indices = similarities.argsort()[::-1][1:]
-    similar_players = player_data.iloc[similar_players_indices][['Player', 'Nation', 'League', 'Squad', 'Age', 'Position']]
+    similar_players = player_data.iloc[similar_players_indices][['Player', 'Nation', 'League', 'Squad', 'Age', 'Position','image_url']]
     similar_players['similarity_score'] = similarities[similar_players_indices]
     return similar_players.to_dict('records')
 
